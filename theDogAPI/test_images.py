@@ -127,6 +127,24 @@ class TestDogAPI:
         # Проверка статус кода
         assert response.status_code == 201, f"Expected status code 201, but got {response.status_code}"
 
+    @pytest.mark.parametrize("breed_id", [BREED_ID, BREED_ID2])
+    def test_breeds_filters(self, breed_id):
+        """ В этом тесте проверим:
+        1. Статус код
+        2. Проверьте тип породы на основе ее идентификатора
+        3. Этот метод можно использовать для проверки любого типа поля в ответе JSON
+        4. Настройте параметр запроса GET для проверок """
+
+        # Параметр запроса
+        search_url = URL + f"v1/breeds/{breed_id}"
+        response = requests.get(search_url)
+
+        # Проверка статус0кода
+        assert response.status_code == 200, f"Expected status code 200, but got {response.status_code}"
+
+        # Проверьте поле "breed_id" в ответе
+        assert response.json()['id'] == breed_id, f"Expected breed id {breed_id}, but got {response.json()['id']}"
+
     def test_create_image_with_breed(self, headers_post, headers_get):
         # Загрузим изображение в запрос
         upload_url = URL + "v1/images/upload"
@@ -166,8 +184,11 @@ class TestDogAPI:
     def test_create_image_invalid_format(self, headers_post):
         """ В данном тесте проверяем:
                 1. Статус код
-                2. Загрузку невалидного формата файла """
+                2. Загрузку невалидного формата файла
+                3. Загрузка с выбором пути папки с помощью библиотеки os """
         upload_url = URL + "v1/images/upload"
+
+        # Пусть к папке с img
         img_path = os.path.abspath(os.path.join(os.path.dirname(__file__), 'img/invalid_format.docx'))
 
         # Создаем объект FormData
