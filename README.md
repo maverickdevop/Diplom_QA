@@ -1,6 +1,6 @@
-# Проект курса Stepik по Selenium Python + POM
+# Проект курса GeekBrains "Инженер по тестированию".
  
-Ссылка на курс: [Клик](https://stepik.org/course/575).
+Ссылка на курс: [Клик](https://gb.ru/).
 
 Проект, разработанный в рамках дипломного проекта "Исследование и разработка стратегии тестирования RESTful API с использованием проекта The Dog API (developers.thedogapi.com)".
 
@@ -34,4 +34,4 @@
 
 3. Для запуска тестов используйте команду:
    ```shell
-   pytest tests/* 
+   pytest test_images.py
